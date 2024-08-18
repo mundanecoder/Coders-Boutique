@@ -1,9 +1,10 @@
 // app/api/users/route.ts
 
 import { NextRequest, NextResponse } from "next/server";
-import { UserService } from "../../services/auth-register-service";
+// import { UserService } from "../../services/auth-register-service";
 import { UserRepository } from "../../repositories/userRepository";
 import { CreateUserInput } from "../../../types/userTypes";
+import { UserService } from "../../services/user/user-service";
 
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);

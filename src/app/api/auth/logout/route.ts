@@ -9,10 +9,8 @@ const authService = new AuthService(userRepository);
 
 export async function POST(req: NextRequest) {
   try {
-    // Retrieve the refresh token from the cookies
     const refreshToken = req.cookies.get("refreshToken")?.value;
 
-    // If no refresh token is found, respond with an error
     if (!refreshToken) {
       return NextResponse.json(
         { error: "No active session found" },
@@ -20,10 +18,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Invalidate the refresh token in the database
     await authService.invalidateRefreshToken(refreshToken);
 
-    // Clear the refresh token cookie
     const response = NextResponse.json(
       { message: "Logged out successfully" },
       { status: 200 }

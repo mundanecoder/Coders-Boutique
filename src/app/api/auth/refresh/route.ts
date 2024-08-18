@@ -27,7 +27,6 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
 
-    // Set the new refresh token as an HTTP-only cookie
     response.cookies.set("refreshToken", newTokens.refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
