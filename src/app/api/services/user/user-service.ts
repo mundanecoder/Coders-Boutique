@@ -2,6 +2,7 @@
 
 import {
   CreateUserInput,
+  GetAllResult,
   IUserRepository,
   IUserService,
 } from "@/app/types/userTypes";
@@ -23,10 +24,12 @@ export class UserService implements IUserService {
     return this.userRepository.createUser(userData);
   }
 
-  async getAllUsers(params: { skip: number; limit: number }): Promise<User[]> {
+  async getAllUsers(params: {
+    skip: number;
+    limit: number;
+  }): Promise<GetAllResult> {
     return this.userRepository.findAllUsers(params);
   }
-
   async getUserById(userId: string): Promise<User | null> {
     return this.userRepository.findUserById(userId);
   }

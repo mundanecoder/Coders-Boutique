@@ -1,5 +1,3 @@
-// app/api/auth/login/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
 import { UserRepository } from "../../repositories/userRepository";
 import { AuthService } from "../../services/auth-login-service";
@@ -21,7 +19,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Set HTTP-only cookie with refresh token
     const response = NextResponse.json(
       {
         user: loginResult.user,
@@ -34,7 +31,7 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000,
       path: "/",
     });
 

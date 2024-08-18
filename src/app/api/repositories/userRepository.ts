@@ -84,14 +84,21 @@ export class UserRepository implements IUserRepository {
   }: {
     skip: number;
     limit: number;
-  }): Promise<User[]> {
-    return prisma.user.findMany({
-      skip,
-      take: limit,
-      include: { roles: true },
-    });
-  }
+  }): Promise<{ users: User[]; total: number }> {
+    console.log(`Fetching users with skip: ${skip}, limit: ${limit}`);
 
+    const [users, total] = await Promise.all([
+      prisma.user.findMany({
+        skip: Number(skip), // Ensure skip is a number
+        take: Number(limit), // Ensure limit is a number
+        include: { roles: true },
+        orderBy: { id: "asc" }, // Add consistent ordering
+      }),
+      prisma.user.count(),
+    ]);
+
+    return { users, total };
+  }
   async updateUserPassword(userId: string, newPassword: string): Promise<User> {
     const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS ?? "10", 10);
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);

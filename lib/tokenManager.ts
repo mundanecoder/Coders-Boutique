@@ -1,5 +1,3 @@
-// src/lib/tokenManager.ts
-
 import { refresh } from "./auth";
 
 let accessToken: string | null = null;
@@ -23,7 +21,9 @@ export const getAccessToken = async (): Promise<string | null> => {
 
   if (accessTokenExpiry && Date.now() >= accessTokenExpiry - 60000) {
     try {
-      const response = await refresh({ refreshToken });
+      const response = await refresh({ accessToken });
+
+      console.log(response, "token");
       setTokens(
         response.data.accessToken,
         response.data.refreshToken,
@@ -35,7 +35,7 @@ export const getAccessToken = async (): Promise<string | null> => {
     }
   }
 
-  return accessToken;
+  return (accessToken = accessToken || localStorage.getItem("access_token"));
 };
 
 export const clearTokens = () => {

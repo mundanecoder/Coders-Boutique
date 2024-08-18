@@ -1,32 +1,37 @@
-// app/api/users/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
 import { UserRepository } from "../../repositories/userRepository";
+import { authMiddleware } from "../../authMiddleware";
 
 const userRepository = new UserRepository();
 
 export async function GET(req: NextRequest) {
+  const authResponse = await authMiddleware(req);
+  if (authResponse) {
+    return authResponse;
+  }
+
   try {
     const { searchParams } = new URL(req.url);
-    const page = parseInt(searchParams.get("page") || "1", 10);
-    const limit = parseInt(searchParams.get("limit") || "10", 10);
+    const page = Math.max(parseInt(searchParams.get("page") || "1", 10), 1);
+    const limit = Math.min(
+      Math.max(parseInt(searchParams.get("limit") || "10", 10), 1),
+      100
+    ); // Set a reasonable maximum limit
     const skip = (page - 1) * limit;
 
-    const [users, totalUsers] = await Promise.all([
-      userRepository.findAllUsers({ skip, limit }),
-      userRepository.countUsers(),
-    ]);
+    const { users, total } = await userRepository.findAllUsers({ skip, limit });
 
-    const totalPages = Math.ceil(totalUsers / limit);
+    const totalPages = Math.ceil(total / limit);
 
     return NextResponse.json(
       {
         users,
+        currentUser: req.user,
         meta: {
           page,
           limit,
           totalPages,
-          totalUsers,
+          totalUsers: total,
         },
       },
       { status: 200 }

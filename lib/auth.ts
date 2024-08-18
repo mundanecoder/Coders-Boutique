@@ -15,14 +15,27 @@ export const register = (data: {
 export const login = (data: { email: string; password: string }) =>
   apiClient.login(data);
 
-export const refresh = (data: { refreshToken: string }) =>
+export const refresh = (data: { accessToken: string }) =>
   apiClient.refresh(data);
 
 export const logout = () => {
-  apiClient.logout();
-  // Clear tokens from memory
+  return apiClient.logout();
 };
 
+export const getAllUsers = (params?: {
+  page?: number;
+  limit?: number;
+}): Promise<AxiosResponse> => {
+  const { page, limit } = params || {};
+  return apiClient.getAllUsers(page, limit);
+};
+export const getUserById = (userId: string) => {
+  return apiClient.getUserById({ id: userId });
+};
+
+export const deleteUserById = (userId: string) => {
+  return apiClient.deleteUserById({ id: userId });
+};
 export const requestPasswordReset = (email: string): Promise<AxiosResponse> =>
   apiClient.forgotPassword(email);
 

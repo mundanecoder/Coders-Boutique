@@ -44,7 +44,7 @@ const ForgotPasswordComponent: React.FC = () => {
             className="max-w-md w-5/6 mx-auto"
           >
             <p className="text-center mb-4 text-gray-600">
-              Enter your email address and we'll send you a link to reset your
+              Enter your email address and we will send you a link to reset your
               password.
             </p>
             <InputField

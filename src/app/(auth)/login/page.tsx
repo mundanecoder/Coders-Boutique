@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import InputField from "../components/ui/InputField";
 import Link from "next/link";
 import { login } from "../../../../lib/auth";
+import { setTokens } from "../../../../lib/tokenManager";
+import { access } from "fs";
 
 interface LoginFormData {
   email: string;
@@ -32,10 +34,10 @@ const LoginComponent: React.FC = () => {
         email: data.email,
         password: data.password,
       });
-      // console.log("Login successful:", response.data);
-      // Handle successful login
-      // For example, store the token in localStorage or a state management solution
-      localStorage.setItem("token", response.data.token);
+      const { user, accessToken } = response.data;
+      setTokens(accessToken, "", 15 * 60);
+
+      localStorage.setItem("accessToken", accessToken);
       router.push("/"); // Redirect to dashboard or home page
     } catch (err) {
       console.error("Login failed:", err);
