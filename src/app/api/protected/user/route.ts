@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { UserRepository } from "../../repositories/userRepository";
 import { authMiddleware } from "../../authMiddleware";
 
+export const runtime = "edge";
+
 const userRepository = new UserRepository();
 
 export async function GET(req: NextRequest) {

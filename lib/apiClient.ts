@@ -1,6 +1,8 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { getAccessToken } from "./tokenManager";
 
+export const runtime = "edge";
+
 export interface ApiClient {
   register: (data: RegisterData) => Promise<AxiosResponse>;
   login: (data: LoginData) => Promise<AxiosResponse>;
