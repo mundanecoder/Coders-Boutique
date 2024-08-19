@@ -1,4 +1,4 @@
-import { PasswordReset, Token, User } from "@prisma/client";
+import { PasswordReset, Token, User } from "../../../prisma/generated/client";
 
 export interface IUserRepository {
   createUser(data: CreateUserInput): Promise<User>;

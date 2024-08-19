@@ -5,7 +5,7 @@ import {
   CreateUserInput,
   UserRoleEnum,
 } from "../../types/userTypes";
-import { User, Token, PasswordReset } from "@prisma/client";
+import { User, Token, PasswordReset } from "../../../../prisma/generated/client";
 import bcrypt from "bcrypt";
 import { prisma } from "../../../../lib/prisma";
 

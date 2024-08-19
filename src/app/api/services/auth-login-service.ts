@@ -9,7 +9,7 @@ import {
   TokenPair,
 } from "../../types/userTypes";
 import { IUserRepository } from "../../types/userTypes";
-import { User } from "@prisma/client";
+import { User } from "../../../../prisma/generated/client";
 
 export class AuthService implements IAuthService {
   private userRepository: IUserRepository;

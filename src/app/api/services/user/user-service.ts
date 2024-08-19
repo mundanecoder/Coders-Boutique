@@ -6,7 +6,7 @@ import {
   IUserRepository,
   IUserService,
 } from "@/app/types/userTypes";
-import { User } from "@prisma/client";
+import { User } from "../../../../../prisma/generated/client";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { EmailService } from "../../utils/emailService";
