@@ -1,8 +1,6 @@
 [build]
-  command = "npm run build"
-  publish = "out"
+  command = "npm ci && npx prisma generate && npm run build"
+  publish = ".next"
 
-[[redirects]]
-  from = "/*"
-  to = "/"
-  status = 200
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
