@@ -9,7 +9,8 @@ export function middleware(request: NextRequest) {
     path === "/login" ||
     path === "/register" ||
     path === "/forgot-password" ||
-    path === "/reset-password";
+    path === "/reset-password" ||
+    path === "/api-docs";
 
   const refreshtoken = request.cookies.get("refreshToken")?.value || "";
 
